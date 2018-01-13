@@ -1,0 +1,30 @@
+# Direct light to render a face
+Film "image" 
+	"integer xresolution" [1024] "integer yresolution" [1024] 
+"string filename" "./temp/001.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8]
+PixelFilter"box"
+
+LookAt 0 0 1335.7 0 0 0  0 1 0
+Scale -1 1 1
+Camera "perspective" "float fov" [20]
+
+WorldBegin
+
+AttributeBegin
+  LightSource "distant" "point from" [0 0 1] "point to" [0 0 0] "rgb L" [1.5 1.5 1.5]
+	LightSource "infinite" "string mapname" ["./pbEnv.exr"]		# This is a constant environment light.
+	"color L" [.3 .3 .3]
+	"integer nsamples" [8]
+AttributeEnd
+
+Translate 0 0 0
+
+Rotate 0 0 1 0
+Rotate 15 1 0 0
+Rotate 0 1 0 0
+
+Include "model.pbrt"
+
+WorldEnd
